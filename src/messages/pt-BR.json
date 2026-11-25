@@ -1,0 +1,8 @@
+{
+  "profile_title": "Perfil do desenvolvedor",
+  "profile_currentStreak": "Sequência atual",
+  "profile_contributions": "Contribuições",
+  "profile_streakDays": "{count} dias",
+  "dashboard_welcome": "Bem-vindo de volta, {name}",
+  "dashboard_syncGithub": "Sincronizar GitHub"
+}
