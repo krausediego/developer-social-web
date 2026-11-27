@@ -1,4 +1,4 @@
-import { SignInLeftSide } from '@/modules/auth'
+import { SignInLeftSide } from '@/modules/auth/sign-in/components'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth/sign-in')({

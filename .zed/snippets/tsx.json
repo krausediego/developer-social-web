@@ -1,0 +1,41 @@
+{
+  "Log to the console": {
+    "prefix": "clg",
+
+    "body": ["console.log($1);", "$0"],
+
+    "description": "Log to the console",
+  },
+
+  "Add div": {
+    "prefix": "div",
+
+    "body": ["<div>$1</div>", "$0"],
+
+    "description": "Add div",
+  },
+
+  "Add p": {
+    "prefix": "p",
+
+    "body": ["<p>$1</p>", "$0"],
+
+    "description": "Add p",
+  },
+
+  "Add span": {
+    "prefix": "span",
+
+    "body": ["<span>$1</span>", "$0"],
+
+    "description": "Add span",
+  },
+
+  "Add a": {
+    "prefix": "href",
+
+    "body": ["<a href=\"$1\">$2</a>", "$0"],
+
+    "description": "Add a",
+  },
+}

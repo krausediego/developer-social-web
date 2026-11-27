@@ -1,5 +1,6 @@
 import {
   HeadContent,
+  Link,
   Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
@@ -8,6 +9,7 @@ import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
 import { getLocale } from '@/lib/paraglide/runtime'
+import { m } from '@/lib/paraglide/messages'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -37,7 +39,19 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
   }),
   shellComponent: RootDocument,
+  notFoundComponent: NotFoundPage,
 })
+
+function NotFoundPage() {
+  return (
+    <main className="mx-auto max-w-lg space-y-4 p-8">
+      <h1 className="text-xl font-semibold">{m.common_notFound()}</h1>
+      <Link to="/" className="underline">
+        {m.common_home()}
+      </Link>
+    </main>
+  )
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (

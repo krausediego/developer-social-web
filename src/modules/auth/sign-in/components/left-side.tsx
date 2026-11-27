@@ -1,8 +1,11 @@
 import { GithubIcon } from '@/components/icons/lucide-github'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { useAuthSignIn } from '../hooks'
 
 export function SignInLeftSide() {
+  const { socialSignIn } = useAuthSignIn()
+
   return (
     <div className="p-6 lg:p-16 my-auto">
       <div className="flex flex-col gap-6 max-w-115">
@@ -13,7 +16,7 @@ export function SignInLeftSide() {
           Sign in with GitHub and we'll turn your contribution history into a
           profile that's yours to shape and share.
         </p>
-        <Button size="lg">
+        <Button size="lg" onClick={socialSignIn}>
           <GithubIcon />
           Continue with Github
         </Button>

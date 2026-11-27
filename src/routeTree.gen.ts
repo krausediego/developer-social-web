@@ -10,11 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedLayoutRouteImport } from './routes/_authenticated/layout'
+import { Route as OauthSuccessRouteImport } from './routes/oauth-success'
 import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedLayoutRoute = AuthenticatedLayoutRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OauthSuccessRoute = OauthSuccessRouteImport.update({
+  id: '/oauth-success',
+  path: '/oauth-success',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignInRoute = AuthSignInRouteImport.update({
@@ -22,30 +34,51 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => AuthenticatedLayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/oauth-success': typeof OauthSuccessRoute
   '/sign-in': typeof AuthSignInRoute
+  '/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/oauth-success': typeof OauthSuccessRoute
   '/sign-in': typeof AuthSignInRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedLayoutRouteWithChildren
+  '/oauth-success': typeof OauthSuccessRoute
   '/_auth/sign-in': typeof AuthSignInRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in'
+  fullPaths: '/' | '/oauth-success' | '/sign-in' | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in'
-  id: '__root__' | '/' | '/_auth/sign-in'
+  to: '/' | '/oauth-success' | '/sign-in' | '/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/oauth-success'
+    | '/_auth/sign-in'
+    | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedLayoutRoute: typeof AuthenticatedLayoutRouteWithChildren
+  OauthSuccessRoute: typeof OauthSuccessRoute
   AuthSignInRoute: typeof AuthSignInRoute
 }
 
@@ -58,6 +91,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/oauth-success': {
+      id: '/oauth-success'
+      path: '/oauth-success'
+      fullPath: '/oauth-success'
+      preLoaderRoute: typeof OauthSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_auth/sign-in': {
       id: '/_auth/sign-in'
       path: '/sign-in'
@@ -65,11 +112,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedLayoutRoute
+    }
   }
 }
 
+interface AuthenticatedLayoutRouteChildren {
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+}
+
+const AuthenticatedLayoutRouteChildren: AuthenticatedLayoutRouteChildren = {
+  AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+}
+
+const AuthenticatedLayoutRouteWithChildren =
+  AuthenticatedLayoutRoute._addFileChildren(AuthenticatedLayoutRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedLayoutRoute: AuthenticatedLayoutRouteWithChildren,
+  OauthSuccessRoute: OauthSuccessRoute,
   AuthSignInRoute: AuthSignInRoute,
 }
 export const routeTree = rootRouteImport

@@ -4,5 +4,9 @@
   "profile_contributions": "Contribuições",
   "profile_streakDays": "{count} dias",
   "dashboard_welcome": "Bem-vindo de volta, {name}",
-  "dashboard_syncGithub": "Sincronizar GitHub"
+  "dashboard_syncGithub": "Sincronizar GitHub",
+  "dashboard_unavailable": "O dashboard está temporariamente indisponível",
+  "common_retry": "Tentar novamente",
+  "common_notFound": "Página não encontrada",
+  "common_home": "Voltar para o início"
 }
